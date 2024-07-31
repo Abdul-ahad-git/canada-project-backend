@@ -8,6 +8,7 @@ const Product = db.model("agents_management", {
     password: { type: String, required: true },
     email: { type: String, required: false, default: '', unique: true },
     company_name: { type: String, required: false, default: '' },
+    head_quarters: { type: String, required: false, default: '' },
     trading_name: { type: String, required: false, default: '' },
     date_of_business_setup: { type: String, required: false, default: '' },
     address: { type: String, required: false, default: 'NONE' },
@@ -75,7 +76,8 @@ const Product = db.model("agents_management", {
             mobile_number: "",
             institution_name: "",
         }
-    }
+    },
+    price_visibility: { type: Boolean, required: false, default: false },
 
 })
 
@@ -126,7 +128,7 @@ async function edit(_id, change) {
 
         const product = await get({ _id });
 
-        Object.keys(change).forEach(function (key) { 
+        Object.keys(change).forEach(function (key) {
             product[key] = change[key]
         })
 
@@ -162,8 +164,8 @@ async function deleteOne(id) {
 }
 
 
- async function deleteMany(){
-   const resp = await Product.deleteMany({})
-   console.log(resp);
- }
- 
+async function deleteMany() {
+    const resp = await Product.deleteMany({})
+    console.log(resp);
+}
+

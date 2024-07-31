@@ -8,6 +8,7 @@ const agent_api = require('./api/agents_api')
 const programs_api = require('./api/programs_api')
 const options_api = require('./api/options_api')
 const orders_api = require('./api/orders_api')
+const credential = require('./api/credentials_api')
 
 
 // ----------Ends Here--------------
@@ -54,10 +55,14 @@ app.put('/options', options_api.edit)
 
 //Orders
 app.post('/orders', orders_api.create)
+app.put('/orders/:id', orders_api.edit)
 app.get('/orders/:id', orders_api.get)
 app.get('/orders_length', orders_api.getLength)
 app.get('/orders_by_agent_id/:id', orders_api.getOrdersByAgent)
 
+///credential
+app.get("/credential/:id", credential.get)
+app.put("/credential/:id", credential.edit)
 
 
 

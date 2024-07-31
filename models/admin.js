@@ -38,6 +38,7 @@ async function list() {
 
 async function get(_id) {
     const product = await Product.findById(_id)
+    console.log("Ad", product);
     return product
 }
 

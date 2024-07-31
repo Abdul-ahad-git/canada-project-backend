@@ -4,7 +4,8 @@ module.exports = {
     create,
     get,
     getLength,
-    getOrdersByAgent
+    getOrdersByAgent,
+    edit
 }
 
 
@@ -34,4 +35,10 @@ async function getOrdersByAgent(req, res, next) {
     const product = await Product.getOrdersByAgent(req.params.id)
     res.json(product);
 
+}
+
+
+async function edit(req, res, next) {
+    const product = await Product.editPrograms(req.body)
+    res.json(product);
 }

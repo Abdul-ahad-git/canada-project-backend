@@ -12,6 +12,8 @@ const Product = db.model("programs_management", {
     institution: { type: String, required: false, default: "" },
     program_type: { type: String, required: false, default: "" },
     degree: { type: String, required: false, default: "" },
+    currency: { type: String, required: false, default: "" },
+    destination: { type: String, required: false, default: "" },
     duration: {
         type: {
             year: { type: String, default: "" },
@@ -23,7 +25,7 @@ const Product = db.model("programs_management", {
             month: ""
         }
     },
-    course_start_date: { type: String, required: false, default: "" },
+    course_start_date: { type: [String], required: false, default: "" },
     thumbnail: {
         type: {
             url: { type: String, required: false },
@@ -44,15 +46,8 @@ const Product = db.model("programs_management", {
     lang_level: { type: String, required: false, default: "" },
     pre_requisite: { type: String, required: false, default: "" },
     intake: { type: String, required: false, default: "" },
+    accrediation: { type: String, required: false, default: "" },
     deadline: { type: String, required: false, default: "" },
-
-
-
-
-
-    
-
-
 })
 
 
@@ -152,6 +147,9 @@ async function filterProgram(filter) {
     if (filter.INSTITUTIONS.length > 0) {
         query.$or.push({ institution: { $in: filter.INSTITUTIONS } });
     }
+    if (filter.DESTINATIONS.length > 0) {
+        query.$or.push({ institution: { $in: filter.DESTINATIONS } });
+    }
 
     // Ensure there is at least one filter in the query
     if (query.$or.length === 0) {
@@ -169,4 +167,9 @@ async function filterProgram(filter) {
     }
 }
 
+
  
+// Product.deleteMany({})
+// .then(resp=>{
+//     console.log(resp);
+// })
