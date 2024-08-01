@@ -6,7 +6,7 @@ require('dotenv').config()
 const Product = db.model("programs_management", {
     _id: { type: String, default: cuid },
     program_name: { type: String, required: false, default: "" },
-    program_city: { type: String, required: false, default: "" },
+    program_city: { type: [String], required: false, default: "" },
     field_of_study: { type: String, required: false, default: "" },
     language: { type: [String], required: false, default: [] },
     institution: { type: String, required: false, default: "" },
@@ -39,7 +39,7 @@ const Product = db.model("programs_management", {
     },
     description: { type: String, required: false, default: "" },
     code: { type: String, required: false, default: "" },
-    campus: { type: String, required: false, default: "" },
+    // campus: { type: String, required: false, default: "" },
     org_type: { type: String, required: false, default: "" },
     tution_fee: { type: String, required: false, default: "" },
     application_fee: { type: String, required: false, default: "" },
@@ -48,6 +48,8 @@ const Product = db.model("programs_management", {
     intake: { type: String, required: false, default: "" },
     accrediation: { type: String, required: false, default: "" },
     deadline: { type: String, required: false, default: "" },
+    commission: { type: String, required: false, default: "" },
+
 })
 
 
@@ -149,6 +151,9 @@ async function filterProgram(filter) {
     }
     if (filter.DESTINATIONS.length > 0) {
         query.$or.push({ institution: { $in: filter.DESTINATIONS } });
+    }
+    if (filter.CAMPUS.length > 0) {
+        query.$or.push({ institution: { $in: filter.CAMPUS } });
     }
 
     // Ensure there is at least one filter in the query

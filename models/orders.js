@@ -5,7 +5,7 @@ const admins = require('./admin').Product
 
 const Product = db.model("orders_management", {
     _id: { type: String, default: cuid },
-    orderId:{ type:String, default:""},
+    orderId: { type: String, default: "" },
     status: { type: Number, default: 0, required: false },
     preferred_destination: { type: String, default: "" },
     preferred_programs: { type: String, default: "" },
@@ -47,14 +47,25 @@ const Product = db.model("orders_management", {
     },
     educational_background: {
         type: [{
-            graduation: { type: String, default: "" },
-            college_name: { type: String, default: "" },
-            start_date: { type: String, default: "" },
-            completion_date: { type: String, default: "" },
-            grade: { type: String, default: "" },
-            diploma: { type: String, default: "" },
 
-        }], required: false
+            edu_choose: { type: String, default: "" },
+            edu_collage_name: { type: String, default: "" },
+            edu_start_date: { type: String, default: "" },
+            edu_end_date: { type: String, default: "" },
+            edu_grade: { type: String, default: "" },
+            edu_deploma: { type: String, default: "" },
+
+        }], required: false,
+        default: [
+            {
+                edu_choose: "none",
+                edu_collage_name: "none",
+                edu_start_date: "none",
+                edu_end_date: "none",
+                edu_grade: "none",
+                edu_deploma: "none"
+            }
+        ]
     },
     grade_point: {
         type: {
@@ -78,11 +89,11 @@ const Product = db.model("orders_management", {
             completion_date: { type: String },
             country: { type: String },
             title: { type: String },
-        }], required: false, default:{
+        }], required: false, default: {
             company_name: "",
             starting_date: "",
             completion_date: "",
-            country:  "",
+            country: "",
             title: ""
         }
     },
@@ -124,6 +135,28 @@ const Product = db.model("orders_management", {
             _id: { type: String, required: false }
         }, required: false
     },
+    student_passport: {
+        type: {
+            url: { type: String, required: false, default: '' },
+            name: { type: String, required: false, default: '' }
+        },
+        required: false,
+        default: {
+            url: "",
+            name: ""
+        }
+    },
+    student_profile: {
+        type: {
+            url: { type: String, required: false, default: '' },
+            name: { type: String, required: false, default: '' }
+        },
+        required: false,
+        default: {
+            url: "",
+            name: ""
+        }
+    },
     course_id: { type: String, required: false },
     course_name: { type: String, required: false },
     created_date: { type: String, required: false },
@@ -149,7 +182,7 @@ module.exports = {
 
 async function create(body) {
 
-    let BODY = {...body}
+    let BODY = { ...body }
     BODY['orderId'] = Date.now();
     try {
         const product = await Product.create(BODY)
@@ -249,3 +282,8 @@ async function editPrograms(change) {
 
 
 }
+
+// Product.findByIdAndDelete()
+// .then(resp=>{
+//     console.log(resp);
+// })

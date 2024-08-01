@@ -24,6 +24,9 @@ const Product = db.model("options", {
     },
     DESTINATIONS: {
         type: [String], default: []
+    },
+    CAMPUS: {
+        type: [String], default: []
     }
 })
 
