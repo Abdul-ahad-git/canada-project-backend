@@ -152,9 +152,7 @@ async function filterProgram(filter) {
     if (filter.DESTINATIONS.length > 0) {
         query.$or.push({ institution: { $in: filter.DESTINATIONS } });
     }
-    if (filter.CAMPUS.length > 0) {
-        query.$or.push({ institution: { $in: filter.CAMPUS } });
-    }
+
 
     // Ensure there is at least one filter in the query
     if (query.$or.length === 0) {
@@ -169,6 +167,7 @@ async function filterProgram(filter) {
         return results;
     } catch (error) {
         console.error("Error fetching products:", error);
+        return error;
     }
 }
 
