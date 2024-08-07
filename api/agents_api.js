@@ -45,7 +45,7 @@ async function listAll(req, res, nxt) {
 
 async function getById(req, res, nxt) {
 
-    const product = await Product.get(req.body._id);
+    const product = await Product.get(req.params.id);
     res.json(product);
 }
 

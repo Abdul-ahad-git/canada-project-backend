@@ -21,6 +21,7 @@ const Product = db.model("orders_management", {
     country: { type: String, default: "" },
     postal_code: { type: String, default: "" },
     whatsapp_number: { type: String, default: "" },
+    whatsapp_number_code: { type: String, default: "" },
     mobile: { type: String, default: "" },
     email: { type: String, default: "" },
     fathers_family_name: { type: String, default: "" },
@@ -32,6 +33,7 @@ const Product = db.model("orders_management", {
             name: { type: String, default: "" },
             relationship: { type: String, default: "" },
             home_telephone: { type: String, default: "" },
+            telephone_code: { type: String, default: "" },
             work_telephone: { type: String, default: "" },
             email: { type: String, default: "" },
             address: { type: String, default: "" },
@@ -67,7 +69,40 @@ const Product = db.model("orders_management", {
             }
         ]
     },
-    grade_point: {
+    high_school_grade_point: {
+        type: {
+            out_of_twenty: { type: String, default: "" },
+            out_of_fourPointFive: { type: String, default: "" },
+            out_of_hundred: { type: String, default: "" },
+        }, required: false, default: {
+            out_of_twenty: "",
+            out_of_fourPointFive: "",
+            out_of_hundred: "",
+        }
+    },
+    master_grade_point: {
+        type: {
+            out_of_twenty: { type: String, default: "" },
+            out_of_fourPointFive: { type: String, default: "" },
+            out_of_hundred: { type: String, default: "" },
+        }, required: false, default: {
+            out_of_twenty: "",
+            out_of_fourPointFive: "",
+            out_of_hundred: "",
+        }
+    },
+    bachelor_grade_point: {
+        type: {
+            out_of_twenty: { type: String, default: "" },
+            out_of_fourPointFive: { type: String, default: "" },
+            out_of_hundred: { type: String, default: "" },
+        }, required: false, default: {
+            out_of_twenty: "",
+            out_of_fourPointFive: "",
+            out_of_hundred: "",
+        }
+    },
+    diploma_grade_point: {
         type: {
             out_of_twenty: { type: String, default: "" },
             out_of_fourPointFive: { type: String, default: "" },
@@ -157,6 +192,17 @@ const Product = db.model("orders_management", {
             name: ""
         }
     },
+    certificate: {
+        type: {
+            url: { type: String, required: false, default: '' },
+            name: { type: String, required: false, default: '' }
+        },
+        required: false,
+        default: {
+            url: "",
+            name: ""
+        }
+    },
     course_id: { type: String, required: false },
     course_name: { type: String, required: false },
     created_date: { type: String, required: false },
@@ -164,7 +210,8 @@ const Product = db.model("orders_management", {
     course_tution_price: { type: String, required: false, default: '0' },
     course_application_price: { type: String, required: false, default: '0' },
     updated_date: { type: String, required: false, default: "" },
-    updated_time: { type: String, required: false, default: "" }
+    updated_time: { type: String, required: false, default: "" },
+
 
 
 })
@@ -175,6 +222,7 @@ module.exports = {
     getLength,
     getOrdersByAgent,
     editPrograms,
+    getOrders,
     Product
 }
 
@@ -212,6 +260,13 @@ async function get(id) {
 
 }
 
+async function getOrders(id) {
+
+    const agent = await Product.findOne({ _id: id })
+    return { success: true, data: agent }
+
+}
+
 
 async function getLength() {
 
@@ -245,7 +300,8 @@ async function getOrdersByAgent(_id) {
             surname: item['surname'],
             stud_mobile: item['whatsapp_number'],
             order_status: item['status'],
-            program_name: item['course_name']
+            program_name: item['course_name'],
+            order_id: item['_id'],
         })
 
     })
@@ -272,6 +328,8 @@ async function editPrograms(change) {
         // console.log("Saved",product);
 
         await product.save();
+
+        console.log(product);
         return product
 
     }
@@ -287,3 +345,12 @@ async function editPrograms(change) {
 // .then(resp=>{
 //     console.log(resp);
 // })
+
+// async function deleteMany() {
+//     const resp = await Product.deleteMany({})
+//     console.log(resp);
+// }
+
+
+
+// deleteMany()

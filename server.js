@@ -1,6 +1,6 @@
 const express = require('express')
 const http = require('http')
-const cors = require('cors') 
+const cors = require('cors')
 
 //API'S MODULE
 const admin_api = require('./api/admin_api')
@@ -17,7 +17,7 @@ const app = express()
 const PORT = 6020
 
 app.use(express.json())
-app.use(cors()) 
+app.use(cors())
 const server = http.createServer(app)
 
 
@@ -38,16 +38,20 @@ app.delete('/admin/:id', admin_api.deleteOne)
 app.post('/agent', agent_api.create)
 app.post('/agent_validate', agent_api.validate)
 app.get('/agent', agent_api.listAll)
+app.get('/agent/:id', agent_api.getById)
 app.put('/agent/:id', agent_api.edit)
 app.delete('/agent/:id', agent_api.deleteOne)
 
 // Programs
 app.post('/programs', programs_api.create)
 app.get('/programs', programs_api.listAll)
+app.get('/programs/:id', programs_api.getProgramByAgentsAllowedDestination)
 app.put('/programs/:id', programs_api.edit)
-app.get('/programs_get_by_id/:id' ,programs_api.getById)
+app.get('/programs_get_by_id/:id', programs_api.getById)
 app.delete('/programs/:id', programs_api.deleteOne)
 app.post('/programs_filter_api', programs_api.filterPrograms)
+app.post('/program-fetch-in-segments', programs_api.getBySegments)
+
 
 // Options
 app.get('/options', options_api.get)
@@ -59,6 +63,7 @@ app.put('/orders/:id', orders_api.edit)
 app.get('/orders/:id', orders_api.get)
 app.get('/orders_length', orders_api.getLength)
 app.get('/orders_by_agent_id/:id', orders_api.getOrdersByAgent)
+app.get('/order_by_id/:id', orders_api.getOrderById)
 
 ///credential
 app.get("/credential/:id", credential.get)

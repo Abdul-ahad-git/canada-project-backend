@@ -16,6 +16,7 @@ const Product = db.model("agents_management", {
     countries_of_operations: { type: String, required: false, default: '' },
     instituitions_represented: { type: String, required: false, default: '' },
     active: { type: Number, required: false, default: 0 },
+    allowed_countries: { type: [String], required: false, default: [] },
     logo: {
         type: {
             url: { type: String, required: false, default: '' },
@@ -78,7 +79,8 @@ const Product = db.model("agents_management", {
         }
     },
     price_visibility: { type: Boolean, required: false, default: false },
-
+    commision_visibility: { type: Boolean, required: false, default: false },
+    institution_visibility: { type: Boolean, required: false, default: false },
 })
 
 
@@ -168,4 +170,5 @@ async function deleteMany() {
     const resp = await Product.deleteMany({})
     console.log(resp);
 }
+
 

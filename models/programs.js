@@ -1,7 +1,9 @@
 const db = require('../db')
 const cuid = require('cuid')
 const s3 = require('../awsconfig')
+const agents = require('./agent')
 require('dotenv').config()
+const { ObjectId } = require('mongodb')
 
 const Product = db.model("programs_management", {
     _id: { type: String, default: cuid },
@@ -60,6 +62,8 @@ module.exports = {
     get,
     deleteOne,
     filterProgram,
+    fetchDocumentsInSegments,
+    getProgramByAgentsAllowedDestination,
     Product
 }
 
@@ -172,8 +176,43 @@ async function filterProgram(filter) {
 }
 
 
- 
+async function fetchDocumentsInSegments(skip, limit) {
+
+    console.log(skip, limit);
+
+    const product = await Product.find().skip(skip).limit(limit).sort({ _id: -1 });
+    console.log(product.length);
+    const productLength = await Product.countDocuments();
+    return { product: product, count: productLength };
+
+}
+
+
+async function getProgramByAgentsAllowedDestination(id) {
+
+    const agent = await agents.get(id);
+    console.log(agent);
+
+    const programs = await Product.find({ destination: { $in: agent.allowed_countries } })
+    console.log(programs);
+
+    return programs;
+
+
+}
+
 // Product.deleteMany({})
 // .then(resp=>{
 //     console.log(resp);
 // })
+
+
+
+// async function deleteMany() {
+//     const resp = await Product.deleteMany({})
+//     console.log(resp);
+// }
+
+
+
+// deleteMany()
